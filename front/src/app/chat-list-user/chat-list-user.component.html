@@ -1,0 +1,20 @@
+<div class="list-group">
+  <a href="#" class="list-group-item disabled">
+    List Users
+  </a>
+
+  <!-- <div *ngFor="let c of clientsArray">
+     <a class="list-group-item">{{c.name}}</a>
+   </div>
+ -->
+
+  <form>
+
+    <select (change)="handle(selectField.value)" #selectField multiple='3' class="list-group-item">
+      <option *ngFor="let c of clientsArray" [ngValue]="c" value="{{c.idClient}}">
+        {{ c.name }}
+      </option>
+    </select>
+
+  </form>
+</div>
