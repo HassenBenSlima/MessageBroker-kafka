@@ -27,20 +27,12 @@ public class Message implements Serializable {
 	@Transient
 	private Long idS;
 
-	// @JsonBackReference
-	// @ManyToOne
-	// @JoinColumn(name = "idClient") // on a sepecifier la clé etranger
-	// private Client sender;
-
-	// @ManyToMany(mappedBy = "messages")
-	// private Collection<Client> receiver = new ArrayList<>();
 	@JsonManagedReference
 	@OneToMany(mappedBy = "message", fetch = FetchType.LAZY)
 	private Collection<MessagesClients> clients = new ArrayList<>();
 
 	public Message() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Message(String content) {
@@ -64,8 +56,6 @@ public class Message implements Serializable {
 		this.content = content;
 	}
 
-
-
 	public Long getIdS() {
 		return idS;
 	}
@@ -73,20 +63,5 @@ public class Message implements Serializable {
 	public void setIdS(Long idS) {
 		this.idS = idS;
 	}
-
-//	public Collection<MessagesClients> getClients() {
-//		return clients;
-//	}
-//
-//	public void setClients(Collection<MessagesClients> clients) {
-//		this.clients = clients;
-//	}
-
-
-	
-	
-	
-	
-
 
 }

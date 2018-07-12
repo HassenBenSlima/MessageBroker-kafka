@@ -1,7 +1,5 @@
 package spark.fr;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import spark.fr.dao.ClientRepository;
 import spark.fr.dao.MessageRepository;
 import spark.fr.dao.MessagesClientsRepository;
-import spark.fr.entities.Client;
 
 @SpringBootApplication
 public class SpringBrokerApplication implements CommandLineRunner {
@@ -36,21 +33,21 @@ public class SpringBrokerApplication implements CommandLineRunner {
 	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
-
-		List<Client> clientsR = messagesClientsRepository.getClientReciever();
-		clientsR.forEach(c -> {
-
-			System.out.println(c.getName());
-
-		});
-
-		List<Client> clientsS = messagesClientsRepository.getClientSender();
-		clientsS.forEach(c -> {
-
-			System.out.println(c.getName());
-
-		});
-		
+		//
+		// List<Client> clientsR = messagesClientsRepository.getClientReciever();
+		// clientsR.forEach(c -> {
+		//
+		// System.out.println(c.getName());
+		//
+		// });
+		//
+		// List<Client> clientsS = messagesClientsRepository.getClientSender();
+		// clientsS.forEach(c -> {
+		//
+		// System.out.println(c.getName());
+		//
+		// });
+		//
 		// clientRepository.save(new Client("Anis"));
 		// clientRepository.save(new Client("Hassen"));
 		// clientRepository.save(new Client("Mohamed"));

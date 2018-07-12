@@ -15,9 +15,6 @@ public class KafkaConsumer {
 
 	private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
 
-	// @Autowired
-	// private SimpMessagingTemplate template;
-
 	@Autowired
 	MessageStorage storage;
 	@Autowired
@@ -32,13 +29,9 @@ public class KafkaConsumer {
 		// @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long ts) {
 		System.out.println("__________________-__________________");
 		System.out.println("received content:" + message);
-		// System.out.println("received RECEIVED_MESSAGE_KEY:" + key);
-		// System.out.println("received RECEIVED_PARTITION_ID:" + partition);
-		// System.out.println("received RECEIVED_TOPIC:" + topic);
-		// System.out.println("received RECEIVED_TIMESTAMP:" + ts);
 
 		Message msg = messageClient.save(message);
-		log.info("received content = '{}'", "");
+		log.info("received content = '{}'", msg.getIdMsg());
 
 		storage.put(message);
 
