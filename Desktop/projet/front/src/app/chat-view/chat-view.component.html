@@ -1,0 +1,31 @@
+<div class="form-group">
+  <label for="">Discussion</label>
+  <div class="row">
+    <div class="col-md-10 col-xs-10 col-sm-10 col-lg-10">
+      <textarea class="form-control" id="" disabled rows="9"></textarea>
+    </div>
+
+  </div>
+</div>
+
+
+<div>
+  <form [formGroup]="formdata" (ngSubmit)="onClickSubmit(formdata.value)">
+    <div class="form-group">
+      <label for="">Send messages</label>
+      <div class="row">
+        <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8">
+    <textarea type="text" class="form-control" rows="3" name="message" placeholder="message" formControlName="message">
+    </textarea>
+        </div>
+
+        <div class=" col-md-4 col-xs-4 col-sm-4 col-lg-4">
+          <input type="submit" value="Send" class="btn btn-primary sendButton">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<p>
+  Message entered is : {{message}}
+</p>
