@@ -1,18 +1,12 @@
-package spark.fr.entities;
+package com.chat.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Message implements Serializable {
@@ -23,21 +17,20 @@ public class Message implements Serializable {
 	private Long idMsg;
 
 	private String content;
+	@Transient
+	private String user;
 
 	@Transient
-	private Long idS;
-
-	@JsonManagedReference
-	@OneToMany(mappedBy = "message", fetch = FetchType.LAZY)
-	private Collection<MessagesClients> clients = new ArrayList<>();
+	private String sendTo;
 
 	public Message() {
 		super();
 	}
 
-	public Message(String content) {
+	public Message(String content, String user) {
 		super();
 		this.content = content;
+		this.user = user;
 	}
 
 	public Long getIdMsg() {
@@ -56,12 +49,25 @@ public class Message implements Serializable {
 		this.content = content;
 	}
 
-	public Long getIdS() {
-		return idS;
+	public String getUser() {
+		return user;
 	}
 
-	public void setIdS(Long idS) {
-		this.idS = idS;
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getSendTo() {
+		return sendTo;
+	}
+
+	public void setSendTo(String sendTo) {
+		this.sendTo = sendTo;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [idMsg=" + idMsg + ", content=" + content + "]";
 	}
 
 }

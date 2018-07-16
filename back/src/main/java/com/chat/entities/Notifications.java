@@ -1,4 +1,4 @@
-package spark.fr.entities;
+package com.chat.entities;
 
 import java.util.ArrayList;
 import java.util.List;

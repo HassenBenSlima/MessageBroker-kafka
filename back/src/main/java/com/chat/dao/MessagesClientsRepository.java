@@ -1,4 +1,4 @@
-package spark.fr.dao;
+package com.chat.dao;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import spark.fr.entities.Client;
-import spark.fr.entities.MessagesClients;
+import com.chat.entities.Client;
+import com.chat.entities.MessagesClients;
 
 @Repository
 public interface MessagesClientsRepository extends JpaRepository<MessagesClients, Long> {

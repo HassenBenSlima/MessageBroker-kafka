@@ -1,4 +1,4 @@
-package spark.fr.config;
+package com.chat.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import spark.fr.entities.Message;
+import com.chat.entities.Message;
 
 @Configuration
 public class KafkaProducerConfig {

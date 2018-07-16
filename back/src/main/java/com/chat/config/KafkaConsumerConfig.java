@@ -1,4 +1,4 @@
-package spark.fr.config;
+package com.chat.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import spark.fr.entities.Message;
+import com.chat.entities.Message;
 
 @EnableKafka
 @Configuration

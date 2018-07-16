@@ -1,4 +1,4 @@
-package spark.fr.entities;
+package com.chat.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,9 +17,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class MessagesClients implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
