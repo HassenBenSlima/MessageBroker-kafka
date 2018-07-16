@@ -106,6 +106,7 @@ export class ChattingComponent implements OnInit {
         'user': this.name
       })
     );
+    this.message = '';
   }
 
   sendPrivateMessage() {
@@ -119,6 +120,8 @@ export class ChattingComponent implements OnInit {
         'user': this.name
       })
     );
+
+    this.message = '';
   }
 
   showALLMessages(chattingMessage: Message) {
