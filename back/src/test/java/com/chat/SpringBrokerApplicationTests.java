@@ -1,4 +1,4 @@
-package spark.fr;
+package com.chat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
