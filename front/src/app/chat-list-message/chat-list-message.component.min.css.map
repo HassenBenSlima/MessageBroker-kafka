@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,CAAE;EACA,UAAU,EAAE,IAAI;;AAIlB,aAAc;EACZ,YAAY,EAAE,IAAI;EAClB,WAAW,EAAE,IAAI",
+"sources": ["chat-list-message.component.scss"],
+"names": [],
+"file": "chat-list-message.component.min.css"
+}

@@ -10,7 +10,23 @@ import {ChatFooterComponent} from './chat-footer/chat-footer.component';
 import {ClientsService} from './services/clients.service';
 import {MessageService} from './services/message.service';
 import {HttpModule} from '@angular/http';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ChattingComponent} from './chatting/chatting.component';
+import {LoginComponent} from './login/login.component';
+import {NewClientComponent} from './new-client/new-client.component';
+import {RouterModule, Routes} from '@angular/router';
+import {MessageBrokerComponent} from './message-broker/message-broker.component';
+import {WebsocketService} from './services/websocket.service';
+import {NotificationService} from './services/notification.service';
+
+
+const appRoutes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {path: 'new-client', component: NewClientComponent},
+  {path: 'chatting', component: MessageBrokerComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'}
+
+];
 
 @NgModule({
   declarations: [
@@ -20,13 +36,17 @@ import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, V
     ChatListMessageComponent,
     ChatListUserComponent,
     ChatFooterComponent,
+    ChattingComponent,
+    LoginComponent,
+    NewClientComponent,
+    MessageBrokerComponent,
 
   ],
   imports: [
-    BrowserModule, HttpModule, FormsModule, ReactiveFormsModule
+    BrowserModule, HttpModule, RouterModule.forRoot(appRoutes), FormsModule, ReactiveFormsModule,
 
   ],
-  providers: [ClientsService, MessageService],
+  providers: [ClientsService, MessageService, WebsocketService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

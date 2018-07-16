@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAAA,OAAQ;EACN,QAAQ,EAAE,KAAK;EACf,IAAI,EAAE,CAAC;EACP,MAAM,EAAE,CAAC;EACT,KAAK,EAAE,IAAI;EACX,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,MAAM",
+"sources": ["chat-footer.component.scss"],
 "names": [],
 "file": "chat-footer.component.min.css"
 }

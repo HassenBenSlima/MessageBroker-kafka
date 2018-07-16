@@ -1,0 +1,67 @@
+<div class="container spacer">
+  <div class=" panel panel-info" *ngIf="mode==1">
+    <div class="panel panel-heading">New Client</div>
+    <div class="panel panel-body">
+      <form [formGroup]="form" class="form-horizontal">
+
+        <div class="form-group"
+             [ngClass]="{'has-error': (form.get('name').touched || form.get('name').dirty) &&  !form.get('name').valid }">
+          <label class="col-md-2 control-label">Name</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" placeholder="Nom(required)" formControlName="name"/>
+            <span class="help-block"
+                  *ngIf="(form.get('name').touched ||form.get('name').dirty) &&form.get('name').errors">
+              <span *ngIf="form.get('name').errors">entrer le nom svp</span>
+              <span *ngIf="form.get('name').errors"> minimum 3 characters. </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group"
+             [ngClass]="{'has-error': (form.get('password').touched || form.get('password').dirty) &&  !form.get('password').valid }">
+          <label class="col-md-2 control-label">Password</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" placeholder="Password (required)" formControlName="password"/>
+            <span class="help-block"
+                  *ngIf="(form.get('password').touched ||form.get('password').dirty) &&form.get('password').errors">
+              <span *ngIf="form.get('password').errors">entrer numero de password svp</span>
+              <span *ngIf="form.get('password').errors"> svp entrer un num password correcte </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-2">
+
+          </div>
+          <div class="col-md-8">
+            <button class="btn btn-primary" [disabled]="!form.valid" (click)="saveClient()" id="validate"
+                    name="validate">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="panel panel-primary" *ngIf="mode==2">
+    <div class="panel panel-heading">Confirmation</div>
+    <div class="panel panel-body">
+      <div>
+        <div class="form-group">
+          <label class="control-label">Id:</label>
+          <label>{{client.idClient}}</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Name:</label>
+          <label>{{client.name}}</label>
+        </div>
+
+
+        <a routerLink="/chatting"> start chatting</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-chat-footer></app-chat-footer>

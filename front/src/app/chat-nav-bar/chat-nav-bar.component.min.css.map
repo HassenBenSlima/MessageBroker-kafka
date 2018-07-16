@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,MAAM;EACJ,WAAW,EAAE,cAAc;EAC3B,KAAK,EAAE,OAAO",
+"sources": ["chat-nav-bar.component.scss"],
+"names": [],
+"file": "chat-nav-bar.component.min.css"
+}

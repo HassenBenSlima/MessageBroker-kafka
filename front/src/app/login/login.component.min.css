@@ -1,0 +1,7 @@
+@import url(../../css/main.css);
+@import url(../../css/util.css);
+.image {
+  text-align: center;
+  background: url("../../images/chat-1.jpg") repeat-y; }
+
+/*# sourceMappingURL=login.component.min.css.map */

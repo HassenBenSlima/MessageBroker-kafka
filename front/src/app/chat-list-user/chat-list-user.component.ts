@@ -10,6 +10,7 @@ import {Client} from '../model/model.client';
 })
 export class ChatListUserComponent implements OnInit {
 
+  sendToo: string;
   pageClients: any;
   clientsArray: any [] = [];
   clientSender: Client = new Client();
@@ -20,36 +21,23 @@ export class ChatListUserComponent implements OnInit {
 
   ngOnInit() {
     this.doSearch();
-  }
-
-
-  handle(id: number) {
-    alert('selected option\'s value is ' + id);
-    this.idClient = id;
-    this.clientService.idClient = id;
-    this.sendTo();
-
+    this.clientService.currentName.subscribe(sendToo => this.sendToo = sendToo);
 
   }
 
+  newMessage(nameClient: string) {
+    this.clientService.changeNameClient(nameClient);
+  }
 
-  sendTo() {
-    this.clientService.getClientById(this.idClient)
-      .subscribe(data => {
-        this.clientSender = data;
-      }, err => {
-        console.log(err);
-      });
-
+  changeNameClient(nameClient: string) {
+    this.newMessage(nameClient);
   }
 
 
   doSearch() {
-    console.log('Hassen Ben Slima');
     this.clientService.getClients().subscribe(data => {
       this.pageClients = data;
       this.clientsArray = data;
-      console.log(data);
     }, err => {
       console.log(err);
     });

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-chat-nav-bar',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatNavBarComponent implements OnInit {
 
-  constructor() { }
+  notification = 0;
+
+  constructor(private data: NotificationService) {
+  }
 
   ngOnInit() {
+    this.data.currentNotification.subscribe(notification => this.notification = notification);
   }
 
 }

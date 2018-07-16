@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,WAAW;EACT,YAAY,EAAE,IAAI",
+"sources": ["chat-list-user.component.scss"],
+"names": [],
+"file": "chat-list-user.component.min.css"
+}

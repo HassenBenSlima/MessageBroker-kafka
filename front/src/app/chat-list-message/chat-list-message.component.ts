@@ -10,7 +10,6 @@ export class ChatListMessageComponent implements OnInit {
   constructor() {
   }
 
-
   ngOnInit() {
   }
 

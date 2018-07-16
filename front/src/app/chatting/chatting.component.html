@@ -1,0 +1,43 @@
+<div class="container chat ">
+
+  <div class="panel panel-success conversation ">
+    <div class="panel-heading">Discussion</div>
+    <div class="panel-body myStyle">
+
+
+      <div class="list-group" *ngFor="let c of greetings">
+        <a class="list-group-item conversation">
+          <h4 class="list-group-item-heading">From :{{c.user }}</h4>
+          <p class="list-group-item-text">{{c.content }}</p>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">User's Message:</div>
+    <div class="panel-body">
+      <p>Welcome {{name}}</p>
+
+      <form class="form-horizontal">
+
+        <div class="form-group">
+
+      <textarea type="text" id="message" name="message" class="form-control" rows="3"
+                [(ngModel)]="message"></textarea>
+
+        </div>
+        <button class="btn btn-default" type="button" (click)="sendMessage()">Send to All users</button>
+        <button class="btn btn-default" type="button" (click)="sendPrivateMessage()">Private-Send: to :{{sendTo}}
+        </button>
+      </form>
+
+    </div>
+
+  </div>
+
+
+</div>
+

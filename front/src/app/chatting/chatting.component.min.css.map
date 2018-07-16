@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,QAAS;EACP,UAAU,EAAE,IAAI;EAChB,MAAM,EAAE,KAAK;;AAGf,QAAS;EACP,UAAU,EAAE,IAAI;;AAGlB,KAAM;EACJ,KAAK,EAAE,IAAI;EACX,KAAK,EAAE,IAAI;;AAIb,aAAc;EACZ,UAAU,EAAE,IAAI",
+"sources": ["chatting.component.scss"],
+"names": [],
+"file": "chatting.component.min.css"
+}
