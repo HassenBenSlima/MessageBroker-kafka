@@ -9,4 +9,6 @@ import com.chat.entities.Client;
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
 	Client findByNameAndPassword(String name, String password);
+
+	Client findByName(String name);
 }

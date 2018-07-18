@@ -20,7 +20,7 @@ public class SessionProfanity {
 			profanityLevel.set(maxProfanityLevel);
 			throw new TooMuchProfanityException("You reached the max profanity level. You are banned");
 		}
-
+		
 		profanityLevel.addAndGet(partialProfanity);
 	}
 }

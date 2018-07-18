@@ -1,5 +1,6 @@
 package com.chat.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,16 +18,20 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chat.dao.ClientRepository;
 import com.chat.dao.MessageRepository;
+import com.chat.dao.MessagesClientsRepository;
+import com.chat.entities.Client;
 import com.chat.entities.Message;
+import com.chat.entities.MessagesClients;
 import com.chat.private_messages.ProfanityChecker;
 import com.chat.private_messages.SessionProfanity;
 import com.chat.private_messages.TooMuchProfanityException;
 import com.chat.services.KafkaProducer;
-import com.chat.storage.MessageStorage;
 
 @RestController
 @CrossOrigin("*")
@@ -43,13 +48,16 @@ public class MessageController {
 	private SessionProfanity profanity;
 
 	@Autowired
-	KafkaProducer producer;
+	private KafkaProducer producer;
 
 	@Autowired
-	MessageRepository messageRepository;
+	private MessageRepository messageRepository;
 
 	@Autowired
-	MessageStorage storage;
+	private MessagesClientsRepository messagesClientsRepository;
+
+	@Autowired
+	private ClientRepository clientRepository;
 
 	@Value("${jsa.kafka.topic}")
 	private String kafkaTopic;
@@ -71,6 +79,12 @@ public class MessageController {
 	public Message filterPrivateMessage(@Payload Message message, @DestinationVariable("username") String username) {
 		checkProfanityAndSanitize(message);
 		this.simpMessagingTemplate.convertAndSend("/topic/chatting-" + username, message);
+		if (!("".equals(message.getContent()))) {
+			Message savedMessage = messageRepository.save(new Message(message.getContent(), message.getUser()));
+			Client clientSender = clientRepository.findByName(message.getUser());
+			Client clientReciever = clientRepository.findByName(username);
+			messagesClientsRepository.save(new MessagesClients(clientSender, clientReciever, savedMessage, new Date()));
+		}
 		return message;
 	}
 
@@ -78,7 +92,7 @@ public class MessageController {
 	 * pour les mots interdit
 	 * 
 	 * @param message
-	 */
+	 **/
 	private void checkProfanityAndSanitize(Message message) {
 		long profanityLevel = profanityFilter.getMessageProfanity(message.getContent());
 		profanity.increment(profanityLevel);
@@ -112,6 +126,13 @@ public class MessageController {
 		}
 		return msgValue;
 
+	}
+
+	@PutMapping(value = "/messages/{id}")
+	public Message changeStatusMessage(@PathVariable Long id, @RequestBody Message msg) {
+		msg.setIdMsg(id);
+		msg.setViewMessage(true);
+		return messageRepository.save(msg);
 	}
 
 }

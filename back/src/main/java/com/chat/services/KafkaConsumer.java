@@ -1,5 +1,7 @@
 package com.chat.services;
 
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -10,10 +12,13 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import com.chat.dao.ClientRepository;
 import com.chat.dao.MessageRepository;
+import com.chat.dao.MessagesClientsRepository;
+import com.chat.entities.Client;
 import com.chat.entities.Message;
+import com.chat.entities.MessagesClients;
 import com.chat.entities.Notifications;
-import com.chat.storage.MessageStorage;
 
 @Service
 public class KafkaConsumer {
@@ -26,15 +31,19 @@ public class KafkaConsumer {
 		return latch;
 	}
 
-	private Notifications notifications = new Notifications(0);
+	@Autowired
+	MessageRepository messageRepository;
+
+	@Autowired
+	ClientRepository clientRepository;
+
+	@Autowired
+	MessagesClientsRepository messagesClientsRepository;
 
 	@Autowired
 	private SimpMessagingTemplate template;
 
-	@Autowired
-	MessageStorage storage;
-	@Autowired
-	MessageRepository messageClient;
+	private Notifications notifications = new Notifications(0);
 
 	@KafkaListener(topics = "${jsa.kafka.topic}")
 	public void receive(ConsumerRecord<?, ?> consumerRecord) {
@@ -46,6 +55,15 @@ public class KafkaConsumer {
 
 		this.template.convertAndSend("/topic/chatting", message1);
 		this.template.convertAndSend("/topic/notification", notifications);
+		Message savedMessage = messageRepository.save(new Message(message1.getContent(), message1.getUser()));
+
+		Client sender = clientRepository.findByName(savedMessage.getUser());
+		List<Client> clients = clientRepository.findAll();
+		clients.forEach(c -> {
+			if (!c.equals(sender))
+				messagesClientsRepository.save(new MessagesClients(sender, c, savedMessage, new Date()));
+		});
+
 		latch.countDown();
 	}
 

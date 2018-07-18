@@ -20,8 +20,7 @@ public class Message implements Serializable {
 	@Transient
 	private String user;
 
-	@Transient
-	private String sendTo;
+	private boolean viewMessage = false;
 
 	public Message() {
 		super();
@@ -57,17 +56,17 @@ public class Message implements Serializable {
 		this.user = user;
 	}
 
-	public String getSendTo() {
-		return sendTo;
+	public boolean isViewMessage() {
+		return viewMessage;
 	}
 
-	public void setSendTo(String sendTo) {
-		this.sendTo = sendTo;
+	public void setViewMessage(boolean viewMessage) {
+		this.viewMessage = viewMessage;
 	}
 
 	@Override
 	public String toString() {
-		return "Message [idMsg=" + idMsg + ", content=" + content + "]";
+		return "Message [idMsg=" + idMsg + ", content=" + content + ", viewMessage=" + viewMessage + "]";
 	}
 
 }
