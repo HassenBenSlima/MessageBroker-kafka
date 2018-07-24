@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,6 +23,10 @@ public class Client implements Serializable {
 	private String name;
 	@JsonProperty("password")
 	private String password;
+
+	@Transient
+	@JsonProperty("connected")
+	private boolean connected;
 
 	public Client() {
 		super();
@@ -56,7 +61,5 @@ public class Client implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 }

@@ -14,20 +14,30 @@ public class MessageStorage {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MessageStorage.class);
 
-	private List<Message> storage = new ArrayList<>();
-	
-	public void put(Message message) {
-		storage.add(message);
+	private List<Message> storageMessages = new ArrayList<>();
+
+	public MessageStorage() {
+		super();
+	}
+
+	public List<Message> getStorageMessages() {
+		return storageMessages;
+	}
+
+	public void setStorageMessages(List<Message> storageMessages) {
+		this.storageMessages = storageMessages;
+	}
+
+	public void addMessage(Message message) {
+		storageMessages.add(message);
 	}
 
 	public void messagesConsumer() {
 
-		storage.forEach(msg -> 
-			LOGGER.info("message : {}", msg.getIdMsg())
-		);
+		storageMessages.forEach(msg -> LOGGER.info("message : {}", msg.getIdMsg()));
 	}
 
 	public void clear() {
-		storage.clear();
+		storageMessages.clear();
 	}
 }

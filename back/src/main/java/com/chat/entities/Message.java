@@ -1,6 +1,7 @@
 package com.chat.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,13 +13,20 @@ import javax.persistence.Transient;
 public class Message implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idMsg;
 
 	private String content;
+	
 	@Transient
 	private String user;
+	
+	@Transient
+	private String sendTo;
+
+	private Date date;
 
 	private boolean viewMessage = false;
 
@@ -64,9 +72,26 @@ public class Message implements Serializable {
 		this.viewMessage = viewMessage;
 	}
 
+	public String getSendTo() {
+		return sendTo;
+	}
+
+	public void setSendTo(String sendTo) {
+		this.sendTo = sendTo;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
-		return "Message [idMsg=" + idMsg + ", content=" + content + ", viewMessage=" + viewMessage + "]";
+		return "Message [idMsg=" + idMsg + ", content=" + content + ", user=" + user + ", sendTo=" + sendTo + ", date="
+				+ date + ", viewMessage=" + viewMessage + "]";
 	}
 
 }

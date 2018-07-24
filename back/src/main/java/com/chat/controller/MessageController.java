@@ -32,6 +32,7 @@ import com.chat.private_messages.ProfanityChecker;
 import com.chat.private_messages.SessionProfanity;
 import com.chat.private_messages.TooMuchProfanityException;
 import com.chat.services.KafkaProducer;
+import com.chat.storage.MessageStorage;
 
 @RestController
 @CrossOrigin("*")
@@ -59,6 +60,9 @@ public class MessageController {
 	@Autowired
 	private ClientRepository clientRepository;
 
+	@Autowired
+	private MessageStorage messageStorage;
+
 	@Value("${jsa.kafka.topic}")
 	private String kafkaTopic;
 
@@ -71,6 +75,7 @@ public class MessageController {
 			// Restore interrupted state...
 			Thread.currentThread().interrupt();
 		}
+		System.out.println(message);
 		producer.send(message);
 	}
 
@@ -78,13 +83,8 @@ public class MessageController {
 	@SendToUser(value = "/exchange/amq.direct/chat.message", broadcast = false)
 	public Message filterPrivateMessage(@Payload Message message, @DestinationVariable("username") String username) {
 		checkProfanityAndSanitize(message);
-		this.simpMessagingTemplate.convertAndSend("/topic/chatting-" + username, message);
-		if (!("".equals(message.getContent()))) {
-			Message savedMessage = messageRepository.save(new Message(message.getContent(), message.getUser()));
-			Client clientSender = clientRepository.findByName(message.getUser());
-			Client clientReciever = clientRepository.findByName(username);
-			messagesClientsRepository.save(new MessagesClients(clientSender, clientReciever, savedMessage, new Date()));
-		}
+		producer.send(message);
+		
 		return message;
 	}
 
@@ -133,6 +133,11 @@ public class MessageController {
 		msg.setIdMsg(id);
 		msg.setViewMessage(true);
 		return messageRepository.save(msg);
+	}
+
+	@GetMapping("/oldMessages")
+	public List<Message> getAllOldMessages() {
+		return messageStorage.getStorageMessages();
 	}
 
 }
