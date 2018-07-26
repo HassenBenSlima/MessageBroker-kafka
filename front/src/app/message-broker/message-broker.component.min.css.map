@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAAA,YAAa;EACX,UAAU,EAAE,MAAM",
+"sources": ["message-broker.component.scss"],
 "names": [],
 "file": "message-broker.component.min.css"
 }

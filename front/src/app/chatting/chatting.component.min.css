@@ -1,9 +1,9 @@
 .myStyle {
   overflow-y: auto;
-  height: 200px; }
+  height: 300px; }
 
-.mytable {
-  margin-top: 20px; }
+textarea {
+  resize: none; }
 
 .chat {
   width: 100%;

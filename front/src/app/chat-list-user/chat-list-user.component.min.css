@@ -1,4 +1,9 @@
 .styleUsers {
-  padding-left: 20px; }
+  padding-left: 20px;
+  height: 500px; }
+
+.myStyle {
+  overflow-y: auto;
+  height: 444px; }
 
 /*# sourceMappingURL=chat-list-user.component.min.css.map */

@@ -9,6 +9,7 @@ export class ClientsService {
 
   idClient: number;
   nameClient: string;
+  show = false;
   private ClientName = new BehaviorSubject('');
   currentName = this.ClientName.asObservable();
 
@@ -19,7 +20,6 @@ export class ClientsService {
   changeNameClient(nameClient: string) {
     this.ClientName.next(nameClient);
   }
-
 
   getClients() {
     return this.http.get('http://localhost:8080/clients')
@@ -50,7 +50,6 @@ export class ClientsService {
     return this.http.delete('http://localhost:8080/clients/' + id)
       .map(resp => resp.json());
   }
-
 
 }
 

@@ -11,7 +11,6 @@ export class WebsocketService {
     const socket = new SockJS('http://localhost:8080/chatting');
     const stompClient = Stomp.over(socket);
 
-    ;
 
     /* const sessionId = /\/([^\/]+)\/websocket/.exec(socket._transport.url)[1];
      console.log('connected, session id: ' + sessionId);

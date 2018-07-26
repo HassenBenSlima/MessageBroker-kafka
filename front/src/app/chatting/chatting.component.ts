@@ -4,6 +4,7 @@ import {ClientsService} from '../services/clients.service';
 import {WebsocketService} from '../services/websocket.service';
 import {NotificationService} from '../services/notification.service';
 import {Client} from '../model/model.client';
+import {MessageService} from '../services/message.service';
 
 @Component({
   selector: 'app-chatting',
@@ -12,34 +13,31 @@ import {Client} from '../model/model.client';
 })
 export class ChattingComponent implements OnInit {
 
+
   notification = 0;
   greetings: Message[] = [];
   participants: Client[] = [];
+  privateMsgs: Message [] = [];
+
   disabled: boolean;
   message: string;
   sendTo: string;
   stompClient;
   name = '';
 
+  oldMessages: Message [] = [];
+
+
   constructor(public clientsService: ClientsService,
               private webSocketService: WebsocketService,
-              public data: NotificationService) {
+              public data: NotificationService,
+              private messageService: MessageService) {
 
     this.stompClient = this.webSocketService.connectSocket();
     this.name = this.clientsService.nameClient;
     console.log('name :' + this.name);
-
-
   }
 
-  ngOnInit() {
-
-    this.connect();
-    this.data.currentNotification.subscribe(notification => this.notification = notification);
-    this.clientsService.currentName.subscribe(sendTo => this.sendTo = sendTo);
-
-
-  }
 
   setConnected(connected: boolean) {
     this.disabled = connected;
@@ -48,6 +46,7 @@ export class ChattingComponent implements OnInit {
       this.greetings = [];
     }
   }
+
 
   connect() {
     const _this = this;
@@ -84,26 +83,16 @@ export class ChattingComponent implements OnInit {
 
   }
 
-  /*
-  * send Message object
-  * */
-
-  disconnect() {
-    if (this.stompClient != null) {
-      this.stompClient.disconnect();
-    }
-
-    this.setConnected(false);
-    console.log('Disconnected!');
-  }
-
   sendMessage() {
     this.stompClient.send(
       '/app/message',
       {},
       JSON.stringify({
         'content': this.message,
-        'user': this.name
+        'user': this.name,
+        'sendTo': 'everyone',
+        'date': new Date(),
+
       })
     );
     this.message = '';
@@ -117,7 +106,9 @@ export class ChattingComponent implements OnInit {
       {},
       JSON.stringify({
         'content': this.message,
-        'user': this.name
+        'user': this.name,
+        'sendTo': this.sendTo,
+        'date': new Date(),
       })
     );
 
@@ -128,12 +119,25 @@ export class ChattingComponent implements OnInit {
     this.greetings.push(chattingMessage);
   }
 
+  showALLPrivateMessages(privateMessage: Message) {
+    this.privateMsgs.push(privateMessage);
+  }
+
   showALLCurrentUsers(currentClient: Client) {
     this.participants.push(currentClient);
   }
 
   newNotification(newNotification: number) {
     this.data.changeNotification(newNotification);
+  }
+
+  ngOnInit() {
+
+    this.connect();
+    this.data.currentNotification.subscribe(notification => this.notification = notification);
+    this.clientsService.currentName.subscribe(sendTo => this.sendTo = sendTo);
+    this.messageService.currentMessage.subscribe(oldMessages => this.oldMessages = oldMessages);
+
   }
 
 }

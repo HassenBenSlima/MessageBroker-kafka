@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,WAAW;EACT,YAAY,EAAE,IAAI",
+"mappings": "AAAA,WAAY;EACV,YAAY,EAAE,IAAI;EAClB,MAAM,EAAE,KAAK;;AAGf,QAAS;EACP,UAAU,EAAE,IAAI;EAChB,MAAM,EAAE,KAAK",
 "sources": ["chat-list-user.component.scss"],
 "names": [],
 "file": "chat-list-user.component.min.css"

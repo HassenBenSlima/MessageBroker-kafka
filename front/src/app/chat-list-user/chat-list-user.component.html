@@ -3,13 +3,13 @@
     List Users
   </a>
 
-  <form>
-    <select (change)="changeNameClient(selectField.value)" #selectField multiple='3' class="form-control ">
-      <option *ngFor="let c of clientsArray" [ngValue]="c" value="{{c.name}}" class="list-group-item">
-        {{ c.name }}
-      </option>
-    </select>
+  <div class="myStyle">
+    <div *ngFor="let c of clientsArray">
 
-  </form>
+      <a class="list-group-item" (click)="changeNameClient(c.name)">{{c.name}}</a>
 
+    </div>
+
+  </div>
+  <a class="list-group-item active" (click)="changeNameClient('everyone')">everyOne</a>
 </div>
