@@ -38,6 +38,7 @@ vous devez Installer
 	 3. démarrer le seveur kafka et zookeeper
 	* `.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties`
     * `.\bin\windows\kafka-server-start.bat .\config\server.properties`
+
 	
 ## Exécution de  l'application 
 
@@ -58,5 +59,4 @@ vous devez Installer
 
  Nous tenons  à remercier toute l'équipe Java de la société Spark-IT qui  nous a  donné 
  l'opportunité d'enrichir  nos compétences.
- 
 
