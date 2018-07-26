@@ -12,7 +12,6 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +21,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chat.dao.ClientRepository;
 import com.chat.dao.MessageRepository;
-import com.chat.dao.MessagesClientsRepository;
-import com.chat.entities.Client;
 import com.chat.entities.Message;
-import com.chat.entities.MessagesClients;
-import com.chat.private_messages.ProfanityChecker;
-import com.chat.private_messages.SessionProfanity;
-import com.chat.private_messages.TooMuchProfanityException;
+import com.chat.profanity_checker.ProfanityChecker;
+import com.chat.profanity_checker.SessionProfanity;
+import com.chat.profanity_checker.TooMuchProfanityException;
 import com.chat.services.KafkaProducer;
 import com.chat.storage.MessageStorage;
 
@@ -38,9 +33,6 @@ import com.chat.storage.MessageStorage;
 @CrossOrigin("*")
 public class MessageController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
-
-	@Autowired
-	private SimpMessagingTemplate simpMessagingTemplate;
 
 	@Autowired
 	private ProfanityChecker profanityFilter;
@@ -53,12 +45,6 @@ public class MessageController {
 
 	@Autowired
 	private MessageRepository messageRepository;
-
-	@Autowired
-	private MessagesClientsRepository messagesClientsRepository;
-
-	@Autowired
-	private ClientRepository clientRepository;
 
 	@Autowired
 	private MessageStorage messageStorage;
@@ -75,16 +61,20 @@ public class MessageController {
 			// Restore interrupted state...
 			Thread.currentThread().interrupt();
 		}
-		System.out.println(message);
 		producer.send(message);
+		LOGGER.info("message{}", message);
+		// Message msg = new Message("test", "test", "test", new Date());
+		// for (int i = 0; i < 1000; i++) {
+		//
+		// }
+
 	}
 
 	@MessageMapping("/chat.private.{username}")
-	@SendToUser(value = "/exchange/amq.direct/chat.message", broadcast = false)
 	public Message filterPrivateMessage(@Payload Message message, @DestinationVariable("username") String username) {
 		checkProfanityAndSanitize(message);
 		producer.send(message);
-		
+
 		return message;
 	}
 
@@ -100,9 +90,13 @@ public class MessageController {
 	}
 
 	@MessageExceptionHandler
-	@SendToUser(value = "/exchange/amq.direct/errors", broadcast = false)
-	public String handleProfanity(TooMuchProfanityException e) {
-		return e.getMessage();
+	@SendToUser(value = "/exchange/amq.direct/chat.message", broadcast = false)
+	public Message handleProfanity(TooMuchProfanityException e) {
+		Message msg = new Message();
+		msg.setContent(e.getMessage());
+		msg.setDate(new Date());
+		msg.setUser("System");
+		return msg;
 	}
 
 	@GetMapping(value = "/messages")
@@ -138,6 +132,16 @@ public class MessageController {
 	@GetMapping("/oldMessages")
 	public List<Message> getAllOldMessages() {
 		return messageStorage.getStorageMessages();
+	}
+
+	@GetMapping("/privateMessages")
+	public List<Message> getAllPrivateMessageBettweenTwoPersonnes(String sender, String reciever) {
+		return messageStorage.getAllMessagesBettweenTwoPersonnes(sender, reciever);
+	}
+
+	@GetMapping("/publicMessages")
+	public List<Message> getAllPublicMessage() {
+		return messageStorage.getPublicMessages();
 	}
 
 }

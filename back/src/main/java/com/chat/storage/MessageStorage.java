@@ -20,6 +20,30 @@ public class MessageStorage {
 		super();
 	}
 
+	public List<Message> getAllMessagesBettweenTwoPersonnes(String sender, String reciever) {
+		List<Message> privateMessages = new ArrayList<>();
+		storageMessages.forEach(msg -> {
+			if ((msg.getUser().equals(sender) && msg.getSendTo().equals(reciever))
+					|| (msg.getUser().equals(reciever) && msg.getSendTo().equals(sender))) {
+				privateMessages.add(msg);
+			}
+
+		});
+
+		return privateMessages;
+	}
+
+	public List<Message> getPublicMessages() {
+		List<Message> publicMessages = new ArrayList<>();
+		storageMessages.forEach(msg -> {
+			if ("everyone".equals(msg.getSendTo())) {
+				publicMessages.add(msg);
+			}
+		});
+
+		return publicMessages;
+	}
+
 	public List<Message> getStorageMessages() {
 		return storageMessages;
 	}

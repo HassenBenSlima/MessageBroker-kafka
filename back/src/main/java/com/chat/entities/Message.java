@@ -28,17 +28,33 @@ public class Message implements Serializable {
 
 	private Date date;
 
+	private String type;
+	
 	private boolean viewMessage = false;
 
 	public Message() {
 		super();
 	}
 
-	public Message(String content, String user) {
+	
+	
+	
+	
+
+
+	public Message(String content, String user, String sendTo, Date date) {
 		super();
 		this.content = content;
 		this.user = user;
+		this.sendTo = sendTo;
+		this.date = date;
 	}
+
+
+
+
+
+
 
 	public Long getIdMsg() {
 		return idMsg;
@@ -86,6 +102,14 @@ public class Message implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override

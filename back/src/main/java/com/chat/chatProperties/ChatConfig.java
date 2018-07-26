@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Description;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
-import com.chat.private_messages.ProfanityChecker;
-import com.chat.private_messages.SessionProfanity;
+import com.chat.profanity_checker.ProfanityChecker;
+import com.chat.profanity_checker.SessionProfanity;
 
 @Configuration
 @EnableConfigurationProperties(ChatProperties.class)

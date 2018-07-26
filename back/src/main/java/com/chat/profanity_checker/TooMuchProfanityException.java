@@ -1,4 +1,4 @@
-package com.chat.private_messages;
+package com.chat.profanity_checker;
 
 public class TooMuchProfanityException extends RuntimeException {
 

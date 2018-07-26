@@ -1,6 +1,5 @@
 package com.chat.services;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -31,6 +30,8 @@ public class KafkaConsumer implements ConsumerSeekAware {
 		return latch;
 	}
 
+	private ConsumerSeekCallback consumerSeekCallback;
+
 	@Autowired
 	private MessageStorage messageStorage;
 
@@ -54,29 +55,42 @@ public class KafkaConsumer implements ConsumerSeekAware {
 		LOGGER.info("received data='{}'", consumerRecord);
 		messageStorage.addMessage(consumerRecord);
 
-		List<Message> listMessages = messageStorage.getStorageMessages();
-		listMessages.forEach(msg -> {
+		// List<Message> listMessages = messageStorage.getStorageMessages();
 
-			if ("everyone".equals(msg.getSendTo())) {
-				this.template.convertAndSend("/topic/chatting", consumerRecord);
-			} else if ((msg.getUser().equals(consumerRecord.getUser()))
-					&& (msg.getSendTo().equals(consumerRecord.getSendTo()))) {
-				this.template.convertAndSend("/topic/chatting-" + msg.getSendTo(), consumerRecord);
-				this.template.convertAndSend("/topic/chatting-" + msg.getUser(), consumerRecord);
+		// for (Message item : listMessages) {
+		//
+		// LOGGER.info(item.getContent());
+		// }
+		//
+		// LOGGER.info("---------------------------------------------");
+		// Collections.reverse(listMessages);
+		//
+		// for (Message item : listMessages) {
+		//
+		// LOGGER.info(item.getContent());
+		// }
 
-			}
+		if ("everyone".equals(consumerRecord.getSendTo())) {
+			this.template.convertAndSend("/topic/chatting", consumerRecord);
 
-		});
-		notifications.increment();
+			notifications.increment();
+			this.template.convertAndSend("/topic/notification", notifications);
 
-		this.template.convertAndSend("/topic/notification", notifications);
+		} else {
+			this.template.convertAndSend("/topic/chatting-" + consumerRecord.getSendTo(), consumerRecord);
+			this.template.convertAndSend("/topic/chatting-" + consumerRecord.getUser(), consumerRecord);
+		}
 
 		latch.countDown();
 	}
 
+	public ConsumerSeekCallback getConsumerSeekCallback() {
+		return consumerSeekCallback;
+	}
+
 	@Override
 	public void registerSeekCallback(ConsumerSeekCallback callback) {
-
+		this.consumerSeekCallback = callback;
 	}
 
 	@Override

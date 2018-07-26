@@ -1,4 +1,4 @@
-package com.chat.private_messages;
+package com.chat.profanity_checker;
 
 import java.util.concurrent.atomic.AtomicLong;
 
