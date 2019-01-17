@@ -5,7 +5,7 @@ Système messagerie et notification.
 ## Commencer
 
 Vous pouvez télécharger le zip ou bien  utiliser  git :
-git clone `https://github.com/HassenBenSlima/BrokerSpring/branches`
+git clone `https://github.com/HassenBenSlima/MessageBroker-kafka.git`
 
 
 ## Exigences
@@ -31,13 +31,13 @@ vous devez Installer
 
 	1.  télécharger kafka et zookeeper :
 
-	 * `https://www.apache.org/dyn/closer.cgi?path=/kafka/1.1.0/kafka_2.11-1.1.0.tgz`
+	 * https://www.apache.org/dyn/closer.cgi?path=/kafka/1.1.0/kafka_2.11-1.1.0.tgz
 
 	 2. extraire le dossier kafka_2.11-1.1.0.tgz 
 
 	 3. démarrer le seveur kafka et zookeeper
-	* `.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties`
-    * `.\bin\windows\kafka-server-start.bat .\config\server.properties`
+	* .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+        * .\bin\windows\kafka-server-start.bat .\config\server.properties
 
 	
 ## Exécution de  l'application 
